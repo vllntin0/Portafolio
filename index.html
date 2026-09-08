@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matías Morales - Portafolio Profesional</title>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* --- VARIABLES & RESET --- */
+        :root {
+            --bg-main: #0a0a0a;
+            --bg-card: #141414;
+            --bg-hover: #1e1e1e;
+            --border-color: #2a2a2a;
+            --text-primary: #f2f2f2;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --accent-gray: #333333;
+            --accent-light: #e0e0e0;
+            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-main);
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- MARCA DE AGUA PERMANENTE --- */
+        .watermark {
+            position: fixed;
+            bottom: 15px;
+            right: 20px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            pointer-events: none;
+            z-index: 9999;
+            font-weight: 500;
+        }
+
+        /* --- HEADER / NAVEGACIÓN --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 1.2rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-primary);
+        }
+
+        .logo span {
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            color: var(--text-primary);
+            background-color: var(--bg-hover);
+        }
+
+        /* --- CONTENEDOR VISTAS (CAPAS) --- */
+        main {
+            margin-top: 80px;
+            flex: 1;
+            padding: 3rem 8%;
+            max-width: 1400px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .view {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out forwards;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- VISTA: INICIO / HERO --- */
+        .hero-container {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: center;
+            min-height: calc(80vh - 80px);
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.35rem 0.8rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        .hero-title span {
+            color: var(--text-muted);
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-light);
+            color: #000;
+            border: 1px solid var(--accent-light);
+        }
+
+        .btn-primary:hover {
+            background-color: #ffffff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--bg-card);
+            border-color: #444;
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-image {
+            width: 100%;
+            max-width: 380px;
+            height: 480px;
+            object-fit: cover;
+            border-radius: 12px;
+            filter: grayscale(100%) contrast(110%);
+            border: 1px solid var(--border-color);
+            transition: filter 0.5s ease;
+        }
+
+        .hero-image:hover {
+            filter: grayscale(0%);
+        }
+
+        /* --- VISTA: PROYECTOS --- */
+        .section-header {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: #444;
+        }
+
+        .project-thumb {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            filter: grayscale(40%);
+            transition: filter 0.3s ease;
+        }
+
+        .project-card:hover .project-thumb {
+            filter: grayscale(0%);
+        }
+
+        .project-info {
+            padding: 1.5rem;
+        }
+
+        .project-tag {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .project-link {
+            font-size: 0.85rem;
+            color: var(--accent-light);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-weight: 500;
+        }
+
+        /* --- VISTA: DETALLE PROYECTO (MODAL / PÁGINA DEDICADA) --- */
+        .back-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .back-btn:hover { color: var(--text-primary); }
+
+        .media-container {
+            width: 100%;
+            max-height: 500px;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .media-container img, .media-container video {
+            width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+        }
+
+        .project-detail-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+        }
+
+        .detail-block h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .detail-block p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* --- VISTA: SOBRE MÍ --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .skill-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .skill-item h4 {
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .skill-item p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 868px) {
+            .hero-container, .project-detail-grid, .about-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-image-wrapper { order: -1; }
+            .hero-title { font-size: 2.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MARCA DE AGUA PERMANENTE -->
+    <div class="watermark"> © 2026 Matías Morales</div>
+
+    <!-- NAVBAR -->
+    <header>
+        <div class="logo">Matías Morales <span>/ Portafolio</span></div>
+        <nav>
+            <button class="nav-btn active" onclick="switchView('inicio')">Inicio</button>
+            <button class="nav-btn" onclick="switchView('proyectos')">Proyectos</button>
+            <button class="nav-btn" onclick="switchView('sobre-mi')">Sobre Mí</button>
+            <button class="nav-btn" onclick="switchView('contacto')">Contacto</button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- VISTA 1: INICIO -->
+        <section id="view-inicio" class="view active">
+            <div class="hero-container">
+                <div class="hero-text">
+                    <span class="hero-badge">ING. REALIDAD VIRTUAL & JUEGOS DIGITALES</span>
+                    <span class="hero-badge">UNIVERSIDAD BERNARDO O'HIGGINS</span>
+                    <h1 class="hero-title">Hola, soy Matías.<br><span>Genero ideas en base a experiencias.</span></h1>
+                    <p class="hero-description">
+                        Estudiante enfocado en crear proyectos funcionales, limpios e innovadores. Apasionado por la tecnología, la optimización de procesos y la educación por medio de videojuegos.
+               
+                    </p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" onclick="switchView('proyectos')">
+                            Explorar Proyectos <i data-lucide="arrow-right"></i>
+                        </button>
+                        <button class="btn btn-secondary" onclick="switchView('sobre-mi')">
+                            Más sobre mí
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-image-wrapper">
+                    <!-- Puedes reemplazar esta URL por la foto que quieras usar -->
+                    <img src="images/Foto_Inicio.jpeg" alt="Matías Morales" class="hero-image">
+                </div>
+            </div>
+        </section>
+
+        <!-- VISTA 2: PROYECTOS -->
+        <section id="view-proyectos" class="view">
+            <div class="section-header">
+                <h2 class="section-title">Trabajos y Proyectos</h2>
+                <p class="section-subtitle">Selecciona un proyecto para ver sus demostraciones en video, imágenes y documentación.</p>
+            </div>
+            
+            <div class="projects-grid">
+                <!-- Tarjeta Proyecto 1 -->
+                <div class="project-card" onclick="openProject(1)">
+                    <img src="images/Bosque_Aterrador.png" class="project-thumb" alt="Proyecto 1">
+                    <div class="project-info">
+                        <div class="project-tag">Juego Mobile / Unity</div>
+                        <h3 class="project-title">Bosque Aterrador</h3>
+                        <p class="project-desc">Videojuego Mobile con SFX Y VFX.</p>
+                        <span class="project-link">Ver demostración <i data-lucide="chevron-right"></i></span>
+                    </div>
+                </div>
+
+                <!-- Tarjeta Proyecto 2 -->
+                <div class="project-card" onclick="openProject(2)">
+                    <img src="images/Space_Legacy.jpg" class="project-thumb" alt="Proyecto 2">
+                    <div class="project-info">
+                        <div class="project-tag">Juego / Unity</div>
+                        <h3 class="project-title">Space Legacy</h3>
+                        <p class="project-desc">Prueba de animaciones y mecánicas</p>
+                        <span class="project-link">Ver demostración <i data-lucide="chevron-right"></i></span>
+                    </div>
+                </div>
+
+                <!-- Tarjeta Proyecto 3 -->
+                <div class="project-card" onclick="openProject(3)">
+                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" class="project-thumb" alt="Proyecto 3">
+                    <div class="project-info">
+                        <div class="project-tag">Prototipado / Hardware</div>
+                        <h3 class="project-title">Prototipo Interactivo</h3>
+                        <p class="project-desc">Integración de software con controladores interactivos para simulación visual.</p>
+                        <span class="project-link">Ver demostración <i data-lucide="chevron-right"></i></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VISTA 3: DETALLE DE PROYECTO (CAPA INDIVIDUAL) -->
+        <section id="view-detalle-proyecto" class="view">
+            <button class="back-btn" onclick="switchView('proyectos')">
+                <i data-lucide="arrow-left"></i> Volver a Proyectos
+            </button>
+            <h2 id="detail-title" class="section-title">Cargando Título...</h2>
+            <p id="detail-tag" class="section-subtitle" style="margin-bottom: 1.5rem;">CATEGORÍA</p>
+
+            <!-- Contenedor para Imagen o Video demostrativo -->
+            <div id="detail-media" class="media-container">
+                <!-- El contenido se genera por JS -->
+            </div>
+
+            <div class="project-detail-grid">
+                <div class="detail-block">
+                    <h3>Descripción General</h3>
+                    <p id="detail-desc">Descripción completa del proyecto...</p>
+                </div>
+                <div class="detail-block">
+                    <h3>Tecnologías Utilizadas</h3>
+                    <p id="detail-tech">C++, JavaScript, HTML/CSS, Git...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- VISTA 4: SOBRE MÍ -->
+        <section id="view-sobre-mi" class="view">
+            <div class="section-header">
+                <h2 class="section-title">Sobre Mí & Habilidades</h2>
+                <p class="section-subtitle">Perfil personal orientado a desempeño profesional.</p>
+            </div>
+
+            <div class="about-grid">
+                <div>
+                    <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1.5rem;">
+                        ¡Hola! Mi nombre es <strong>Matías Vallentino Morales Mutis</strong>. Me caracterizo por ser una persona proactiva, analítica y apasionada por aprender nuevas tecnologías.
+                    </p>
+                    <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1.5rem;">
+                        Actualmente me encuentro en búsqueda y desarrollo de mi práctica profesional, interesado en formar parte de equipos que busquen innovación y adquirir nuevo conocimiento.
+                   
+                    </p>
+                    <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1.5rem;">
+                        Programador de videojuegos, con foco secundario en desarrollo de aplicaciones de realidad virtual. Sector productivo: industria del entretenimiento digital e interactivo (videojuegos, VR/AR aplicada a entrenamiento y simulación).
+                    </p>
+                    <p style="color: var(--text-secondary); line-height: 1.8;">
+                        Programación en C# y C++, integración de sistemas en Unity y Unreal Engine.
+                    </p>
+                </div>
+
+                <div>
+                    <div class="skill-item">
+                        <h4>Desarrollo & Programación</h4>
+                        <p>Estructuración de software, diseño web estructurado, lógica y algoritmos.</p>
+                    </div>
+                    <div class="skill-item">
+                        <h4>Diseño Visual & UI/UX</h4>
+                        <p>Creación de interfaces limpias y navegación intuitiva.</p>
+                    </div>
+                    <div class="skill-item">
+                        <h4>Gestión & Trabajo en Equipo</h4>
+                        <p>Resolución de problemas, adaptabilidad activa y compromiso técnico.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VISTA 5: CONTACTO -->
+        <section id="view-contacto" class="view">
+            <div class="section-header">
+                <h2 class="section-title">Contacto</h2>
+                <p class="section-subtitle">¿Interesado en mi perfil para práctica profesional? Contactame</p>
+            </div>
+
+            <div style="max-width: 500px; background: var(--bg-card); padding: 2rem; border-radius: 10px; border: 1px solid var(--border-color);">
+                <p style="margin-bottom: 1rem; color: var(--text-secondary);"><strong>Nombre:</strong> Matías Vallentino Morales Mutis</p>
+                <p style="margin-bottom: 1rem; color: var(--text-secondary);"><strong>Email:</strong> matiasvmm2004@gmail.com</p>
+                <p style="margin-bottom: 1.5rem; color: var(--text-secondary);"><strong>Ubicación:</strong> Chile</p>
+                
+                <a href="mailto:tu_correo@ejemplo.com" class="btn btn-primary" style="width: 100%; text-align: center; justify-content: center;">
+                    <i data-lucide="mail"></i> Enviar Correo
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- LOGICA DE NAVEGACIÓN CAPAS (SPA) -->
+    <script>
+        // Inicializar iconos
+        lucide.createIcons();
+
+        // Datos de Proyectos para edición fácil
+        const proyectosData = {
+            1: {
+                title: "Bosque Aterrador",
+                tag: "Videojuego Mobile",
+                desc: "Este proyecto consistió en el desarrollo de un prototipo de juego mobile no terminado ni pulido, solo para mostrar la exportación a un dispositivo mobile.",
+                tech: "C#, Unity, Blender",
+                // Puedes poner el enlace de un video .mp4 o usar imagen
+                mediaType: "video", 
+                mediaSrc: "images/Bosque_Aterrador_Video.mp4"
+            },
+            2: {
+                title: "Space Legacy ",
+                tag: "Videojuego",
+                desc: "Prototipado interactivo de  videojuego en el espacio, integrando animaciones, cajas de texto, articulos equipables, no pulido.",
+                tech: "C#, Unity, Blender, Mixamo",
+                mediaType: "video",
+                mediaSrc: "images/Space_Legacy_Video.mp4"
+            },
+            3: {
+                title: "Prototipo Interactivo",
+                tag: "HARDWARE / SOFTWARE",
+                desc: "Demostración de proyecto con video. Si deseas colocar un video local coloca la ruta de tu archivo MP4 en mediaSrc.",
+                tech: "C++, Microcontroladores, Lógica de control",
+                /* Ejemplo de cómo usar video: 
+                   cambia mediaType a 'video' y mediaSrc a 'video.mp4' o la URL */
+                mediaType: "image", 
+                mediaSrc: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80"
+            }
+        };
+
+        // Función para cambiar de vistas/páginas
+        function switchView(viewName) {
+            // Ocultar todas las vistas
+            const views = document.querySelectorAll('.view');
+            views.forEach(v => v.classList.remove('active'));
+
+            // Quitar estado activo de nav botones
+            const navBtns = document.querySelectorAll('.nav-btn');
+            navBtns.forEach(btn => btn.classList.remove('active'));
+
+            // Mostrar vista seleccionada
+            const targetView = document.getElementById(`view-${viewName}`);
+            if (targetView) {
+                targetView.classList.add('active');
+            }
+
+            // Marcar botón activo correspondiente
+            navBtns.forEach(btn => {
+                if (btn.textContent.toLowerCase().replace(' ', '-') === viewName || 
+                   (viewName === 'inicio' && btn.textContent === 'Inicio')) {
+                    btn.classList.add('active');
+                }
+            });
+
+            window.scrollTo(0, 0);
+        }
+
+        // Abrir detalle de proyecto
+        function openProject(id) {
+            const data = proyectosData[id];
+            if (!data) return;
+
+            document.getElementById('detail-title').innerText = data.title;
+            document.getElementById('detail-tag').innerText = data.tag;
+            document.getElementById('detail-desc').innerText = data.desc;
+            document.getElementById('detail-tech').innerText = data.tech;
+
+            const mediaContainer = document.getElementById('detail-media');
+            if (data.mediaType === 'video') {
+                mediaContainer.innerHTML = `<video controls autoplay loop src="${data.mediaSrc}"></video>`;
+            } else {
+                mediaContainer.innerHTML = `<img src="${data.mediaSrc}" alt="${data.title}">`;
+            }
+
+            switchView('detalle-proyecto');
+        }
+    </script>
+</body>
+</html>
