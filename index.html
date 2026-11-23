@@ -331,7 +331,6 @@
 
         .media-container {
             width: 100%;
-            max-height: 500px;
             background: #000;
             border-radius: 10px;
             overflow: hidden;
@@ -344,8 +343,9 @@
 
         .media-container img, .media-container video {
             width: 100%;
-            max-height: 500px;
+            max-height: 600px;
             object-fit: contain;
+            display: block;
         }
 
         .project-detail-grid {
@@ -364,6 +364,26 @@
         .detail-block p {
             color: var(--text-secondary);
             line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Estilos para contenido intercalado (Proyecto 3 y futuros) */
+        .interleaved-text {
+            margin-bottom: 2.5rem;
+            max-width: 850px;
+        }
+
+        .interleaved-text h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .interleaved-text p {
+            color: var(--text-secondary);
+            line-height: 1.7;
             font-size: 0.95rem;
         }
 
@@ -428,7 +448,6 @@
                     <h1 class="hero-title">Hola, soy Matías.<br><span>Genero ideas en base a experiencias.</span></h1>
                     <p class="hero-description">
                         Estudiante enfocado en crear proyectos funcionales, limpios e innovadores. Apasionado por la tecnología, la optimización de procesos y la educación por medio de videojuegos.
-               
                     </p>
                     <div class="hero-buttons">
                         <button class="btn btn-primary" onclick="switchView('proyectos')">
@@ -440,7 +459,6 @@
                     </div>
                 </div>
                 <div class="hero-image-wrapper">
-                    <!-- Puedes reemplazar esta URL por la foto que quieras usar -->
                     <img src="Foto_Inicio.jpeg" alt="Matías Morales" class="hero-image">
                 </div>
             </div>
@@ -482,7 +500,7 @@
                     <div class="project-info">
                         <div class="project-tag">Juego / Unity</div>
                         <h3 class="project-title">Cocktail</h3>
-                        <p class="project-desc">Simulación inversiva de Barman</p>
+                        <p class="project-desc">Simulación inmersiva de Barman</p>
                         <span class="project-link">Ver demostración <i data-lucide="chevron-right"></i></span>
                     </div>
                 </div>
@@ -497,21 +515,8 @@
             <h2 id="detail-title" class="section-title">Cargando Título...</h2>
             <p id="detail-tag" class="section-subtitle" style="margin-bottom: 1.5rem;">CATEGORÍA</p>
 
-            <!-- Contenedor para Imagen o Video demostrativo -->
-            <div id="detail-media" class="media-container">
-                <!-- El contenido se genera por JS -->
-            </div>
-
-            <div class="project-detail-grid">
-                <div class="detail-block">
-                    <h3>Descripción General</h3>
-                    <p id="detail-desc">Descripción completa del proyecto...</p>
-                </div>
-                <div class="detail-block">
-                    <h3>Tecnologías Utilizadas</h3>
-                    <p id="detail-tech">C++, JavaScript, HTML/CSS, Git...</p>
-                </div>
-            </div>
+            <!-- Contenedor dinámico donde se dibujarán imágenes, videos y textos -->
+            <div id="detail-dynamic-body"></div>
         </section>
 
         <!-- VISTA 4: SOBRE MÍ -->
@@ -528,7 +533,6 @@
                     </p>
                     <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1.5rem;">
                         Actualmente me encuentro en búsqueda y desarrollo de mi práctica profesional, interesado en formar parte de equipos que busquen innovación y adquirir nuevo conocimiento.
-                   
                     </p>
                     <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1.5rem;">
                         Programador de videojuegos, con foco secundario en desarrollo de aplicaciones de realidad virtual. Sector productivo: industria del entretenimiento digital e interactivo (videojuegos, VR/AR aplicada a entrenamiento y simulación).
@@ -559,7 +563,7 @@
         <section id="view-contacto" class="view">
             <div class="section-header">
                 <h2 class="section-title">Contacto</h2>
-                <p class="section-subtitle">¿Interesado en mi perfil para práctica profesional? Contactame</p>
+                <p class="section-subtitle">¿Interesado en mi perfil para práctica profesional? Contáctame</p>
             </div>
 
             <div style="max-width: 500px; background: var(--bg-card); padding: 2rem; border-radius: 10px; border: 1px solid var(--border-color);">
@@ -567,7 +571,7 @@
                 <p style="margin-bottom: 1rem; color: var(--text-secondary);"><strong>Email:</strong> matiasvmm2004@gmail.com</p>
                 <p style="margin-bottom: 1.5rem; color: var(--text-secondary);"><strong>Ubicación:</strong> Chile</p>
                 
-                <a href="mailto:tu_correo@ejemplo.com" class="btn btn-primary" style="width: 100%; text-align: center; justify-content: center;">
+                <a href="mailto:matiasvmm2004@gmail.com" class="btn btn-primary" style="width: 100%; text-align: center; justify-content: center;">
                     <i data-lucide="mail"></i> Enviar Correo
                 </a>
             </div>
@@ -586,14 +590,13 @@
                 tag: "Videojuego Mobile",
                 desc: "Este proyecto consistió en el desarrollo de un prototipo de juego mobile no terminado ni pulido, solo para mostrar la exportación a un dispositivo mobile.",
                 tech: "C#, Unity, Blender",
-                // Puedes poner el enlace de un video .mp4 o usar imagen
                 mediaType: "video", 
                 mediaSrc: "Bosque_Aterrador_Video.mp4"
             },
             2: {
-                title: "Space Legacy ",
+                title: "Space Legacy",
                 tag: "Videojuego",
-                desc: "Prototipado interactivo de  videojuego en el espacio, integrando animaciones, cajas de texto, articulos equipables, no pulido.",
+                desc: "Prototipado interactivo de videojuego en el espacio, integrando animaciones, cajas de texto, artículos equipables, no pulido.",
                 tech: "C#, Unity, Blender, Mixamo",
                 mediaType: "video",
                 mediaSrc: "Space_Legacy_Video.mp4"
@@ -604,39 +607,38 @@
                 tech: "Unity, C#, Blender",
                 content: [
                     {
-                        mediaType:"image",
+                        mediaType: "image",
                         mediaSrc: "Cocktail.jfif"
                     },
                     {
                         mediaType: "text",
                         mediaTitle: "Descripción General",
-                        mediaBody: "Proyectyo de Videojuego inmersivo y educativo, comienzas como un barman novato, luego te harás reconocido por la calidad de tu coctelería e irás conociendo las tradiciones de cada cóctel."
+                        mediaBody: "Proyecto de Videojuego inmersivo y educativo, comienzas como un barman novato, luego te harás reconocido por la calidad de tu coctelería e irás conociendo las tradiciones de cada cóctel."
                     },
                     {
                         mediaType: "image",
                         mediaSrc: "Mapa.jfif"
                     }
+                    // Puedes seguir agregando más bloques aquí abajo:
+                    // { mediaType: "text", mediaTitle: "Otro título", mediaBody: "Más texto..." },
+                    // { mediaType: "video", mediaSrc: "Video_Cocktail.mp4" }
                 ]
             }
         };
 
         // Función para cambiar de vistas/páginas
         function switchView(viewName) {
-            // Ocultar todas las vistas
             const views = document.querySelectorAll('.view');
             views.forEach(v => v.classList.remove('active'));
 
-            // Quitar estado activo de nav botones
             const navBtns = document.querySelectorAll('.nav-btn');
             navBtns.forEach(btn => btn.classList.remove('active'));
 
-            // Mostrar vista seleccionada
             const targetView = document.getElementById(`view-${viewName}`);
             if (targetView) {
                 targetView.classList.add('active');
             }
 
-            // Marcar botón activo correspondiente
             navBtns.forEach(btn => {
                 if (btn.textContent.toLowerCase().replace(' ', '-') === viewName || 
                    (viewName === 'inicio' && btn.textContent === 'Inicio')) {
@@ -654,14 +656,64 @@
 
             document.getElementById('detail-title').innerText = data.title;
             document.getElementById('detail-tag').innerText = data.tag;
-            document.getElementById('detail-desc').innerText = data.desc;
-            document.getElementById('detail-tech').innerText = data.tech;
 
-            const mediaContainer = document.getElementById('detail-media');
-            if (data.mediaType === 'video') {
-                mediaContainer.innerHTML = `<video controls autoplay loop src="${data.mediaSrc}"></video>`;
-            } else {
-                mediaContainer.innerHTML = `<img src="${data.mediaSrc}" alt="${data.title}">`;
+            const dynamicBody = document.getElementById('detail-dynamic-body');
+            dynamicBody.innerHTML = "";
+
+            // Si el proyecto tiene bloques intercalados (content)
+            if (data.content) {
+                data.content.forEach(bloque => {
+                    if (bloque.mediaType === 'image') {
+                        dynamicBody.innerHTML += `
+                            <div class="media-container">
+                                <img src="${bloque.mediaSrc}" alt="${data.title}">
+                            </div>
+                        `;
+                    } else if (bloque.mediaType === 'video') {
+                        dynamicBody.innerHTML += `
+                            <div class="media-container">
+                                <video controls autoplay loop muted src="${bloque.mediaSrc}"></video>
+                            </div>
+                        `;
+                    } else if (bloque.mediaType === 'text') {
+                        dynamicBody.innerHTML += `
+                            <div class="interleaved-text">
+                                ${bloque.mediaTitle ? `<h3>${bloque.mediaTitle}</h3>` : ''}
+                                <p>${bloque.mediaBody}</p>
+                            </div>
+                        `;
+                    }
+                });
+
+                // Tecnologías utilizadas al final
+                dynamicBody.innerHTML += `
+                    <div class="interleaved-text" style="margin-top: 3rem;">
+                        <h3>Tecnologías Utilizadas</h3>
+                        <p>${data.tech}</p>
+                    </div>
+                `;
+            } 
+            // Si el proyecto usa el formato clásico (Proyectos 1 y 2)
+            else {
+                const mediaHTML = data.mediaType === 'video'
+                    ? `<video controls autoplay loop src="${data.mediaSrc}"></video>`
+                    : `<img src="${data.mediaSrc}" alt="${data.title}">`;
+
+                dynamicBody.innerHTML = `
+                    <div class="media-container">
+                        ${mediaHTML}
+                    </div>
+                    <div class="project-detail-grid">
+                        <div class="detail-block">
+                            <h3>Descripción General</h3>
+                            <p>${data.desc}</p>
+                        </div>
+                        <div class="detail-block">
+                            <h3>Tecnologías Utilizadas</h3>
+                            <p>${data.tech}</p>
+                        </div>
+                    </div>
+                `;
             }
 
             switchView('detalle-proyecto');
