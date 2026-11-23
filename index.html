@@ -314,7 +314,7 @@
             font-weight: 500;
         }
 
-        /* --- VISTA: DETALLE PROYECTO (MODAL / PÁGINA DEDICADA) --- */
+        /* --- VISTA: DETALLE PROYECTO (CAPA INDIVIDUAL) --- */
         .back-btn {
             background: none;
             border: none;
@@ -346,6 +346,22 @@
             max-height: 600px;
             object-fit: contain;
             display: block;
+        }
+
+        .pdf-container {
+            width: 100%;
+            height: 650px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            margin-bottom: 2.5rem;
+            background: #141414;
+        }
+
+        .pdf-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
         .project-detail-grid {
@@ -419,6 +435,7 @@
             }
             .hero-image-wrapper { order: -1; }
             .hero-title { font-size: 2.3rem; }
+            .pdf-container { height: 450px; }
         }
     </style>
 </head>
@@ -515,7 +532,7 @@
             <h2 id="detail-title" class="section-title">Cargando Título...</h2>
             <p id="detail-tag" class="section-subtitle" style="margin-bottom: 1.5rem;">CATEGORÍA</p>
 
-            <!-- Contenedor dinámico donde se dibujarán imágenes, videos y textos -->
+            <!-- Contenedor dinámico donde se dibujarán imágenes, videos, textos y documentos -->
             <div id="detail-dynamic-body"></div>
         </section>
 
@@ -620,37 +637,35 @@
                         mediaSrc: "Mapa.jfif"
                     },
                     {
-                        mediaType: "text",
-                        mediaTitle: "Simulador Inmersivo",
-                        mediaBody: "Aquí en este Videojuego no tan solo aprenderás a hacer coctelería, también la historia, preparación, ingredientes, decoraciones."
-                    },
-                    {
                         mediaType: "image",
                         mediaSrc: "Casa.gif"
                     },
                     {
-                      mediaType: "text",
-                      mediaTitle: "Cócteles",
-                      mediaBody: `Lista de Cócteles.
-                     <br>- Mojito
-                     <br>- Negroni
-                     <br>- Cuba Libre
-                     <br>- Old Fashioned
-                     <br>- Margarita
-                     <br>- Clavo Oxidado
-                     <br>Entre muchos otros.`
+                        mediaType: "text",
+                        mediaTitle: "Cócteles",
+                        mediaBody: `Lista de Cócteles:
+                        <br>• Mojito
+                        <br>• Negroni
+                        <br>• Cuba Libre
+                        <br>• Old Fashioned
+                        <br>• Margarita
+                        <br>• Clavo Oxidado
+                        <br>• Entre muchos otros.`
                     },
-                    {
-                        mediaType: "image",
-                        mediaSrc: "Cocteles.jfif"
-                    },
+                    // Opción A: Documento Word (.docx) como botón de descarga directa
                     {
                         mediaType: "link",
-                        mediaTitle: "Documento Completo",
-                        mediaBody: "Revisa el documento detallado del proyecto en formato Word.",
-                        linkText: "Descargar documento (.docx)",
-                        linkHref: "Cocktail.docx"
+                        mediaTitle: "Documentación del Proyecto (Word)",
+                        mediaBody: "Descarga el documento en formato Word con el detalle completo del diseño y mecánicas.",
+                        linkText: "Descargar Documento (.docx)",
+                        linkHref: "Documento_Cocktail.docx"
                     }
+                    // Opción B: Si exportas tu Word a PDF, puedes descomentar este bloque para verlo en pantalla:
+                    // ,{
+                    //     mediaType: "pdf",
+                    //     mediaTitle: "Documentación del Proyecto (PDF)",
+                    //     mediaSrc: "Documento_Cocktail.pdf"
+                    // }
                 ]
             }
         };
@@ -719,6 +734,25 @@
                                 <p>${bloque.mediaBody}</p>
                             </div>
                         `;
+                    } else if (bloque.mediaType === 'pdf') {
+                        dynamicBody.innerHTML += `
+                            <div class="interleaved-text" style="margin-bottom: 1rem;">
+                                ${bloque.mediaTitle ? `<h3>${bloque.mediaTitle}</h3>` : ''}
+                            </div>
+                            <div class="pdf-container">
+                                <iframe src="${bloque.mediaSrc}"></iframe>
+                            </div>
+                        `;
+                    } else if (bloque.mediaType === 'link') {
+                        dynamicBody.innerHTML += `
+                            <div class="interleaved-text">
+                                ${bloque.mediaTitle ? `<h3>${bloque.mediaTitle}</h3>` : ''}
+                                <p style="margin-bottom: 1rem;">${bloque.mediaBody}</p>
+                                <a href="${bloque.linkHref}" download class="btn btn-secondary">
+                                    <i data-lucide="file-text"></i> ${bloque.linkText}
+                                </a>
+                            </div>
+                        `;
                     }
                 });
 
@@ -749,6 +783,9 @@
                     </div>
                 `;
             }
+
+            // Refrescar iconos de Lucide si se agregaron nuevos botones
+            lucide.createIcons();
 
             // Guardar el proyecto específico en la URL (ej: #proyecto-3)
             history.replaceState(null, null, `#proyecto-${id}`);
