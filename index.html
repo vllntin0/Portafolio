@@ -652,7 +652,7 @@
                         <br>• Clavo Oxidado
                         <br>• Entre muchos otros.`
                     },
-                    // Opción A: Documento Word (.docx) como botón de descarga directa
+                   
                     {
                         mediaType: "link",
                         mediaTitle: "Documentación del Proyecto (Word)",
@@ -660,17 +660,12 @@
                         linkText: "Descargar Documento (.docx)",
                         linkHref: "Documento_Cocktail.docx"
                     }
-                    // Opción B: Si exportas tu Word a PDF, puedes descomentar este bloque para verlo en pantalla:
-                    // ,{
-                    //     mediaType: "pdf",
-                    //     mediaTitle: "Documentación del Proyecto (PDF)",
-                    //     mediaSrc: "Documento_Cocktail.pdf"
-                    // }
+                   
                 ]
             }
         };
 
-        // Función para cambiar de vistas/páginas
+       
         function switchView(viewName, updateHash = true) {
             const views = document.querySelectorAll('.view');
             views.forEach(v => v.classList.remove('active'));
@@ -683,7 +678,7 @@
                 targetView.classList.add('active');
             }
 
-            // Marcar botón activo correspondiente
+      
             navBtns.forEach(btn => {
                 const btnNormalized = btn.textContent.toLowerCase()
                     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
