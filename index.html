@@ -601,15 +601,22 @@
             3: {
                 title: "Cocktail",
                 tag: "Unity / C#",
-                desc: "Proyecto de Videojuego inmersivo y educativo, comienzas como un barman novato, te harás conocido por la calidad de tu coctelería e irás conociendo la cultura detras de cada creación",
                 tech: "Unity, C#, Blender",
-                /* Ejemplo de cómo usar video: 
-                   cambia mediaType a 'video' y mediaSrc a 'video.mp4' o la URL */
-                mediaType: "image", 
-                mediaSrc: "Cocktail.jfif",
-
-                mediaType: "image",
-                mediaSrc: "Mapa.jfif"
+                content: [
+                    {
+                        mediaType:"image",
+                        mediaSrc: "Cocktail.jfif"
+                    },
+                    {
+                        mediaType: "text",
+                        mediaTitle: "Descripción General",
+                        mediaBody: "Proyectyo de Videojuego inmersivo y educativo, comienzas como un barman novato, luego te harás reconocido por la calidad de tu coctelería e irás conociendo las tradiciones de cada cóctel."
+                    },
+                    {
+                        mediaType: "image",
+                        mediaSrc: "Mapa.jfif"
+                    }
+                ]
             }
         };
 
