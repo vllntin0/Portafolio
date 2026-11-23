@@ -367,7 +367,7 @@
             font-size: 0.95rem;
         }
 
-        /* Estilos para contenido intercalado (Proyecto 3 y futuros) */
+        /* Estilos para contenido intercalado */
         .interleaved-text {
             margin-bottom: 2.5rem;
             max-width: 850px;
@@ -578,7 +578,7 @@
         </section>
     </main>
 
-    <!-- LOGICA DE NAVEGACIÓN CAPAS (SPA) -->
+    <!-- LOGICA DE NAVEGACIÓN CAPAS (SPA) CON MEMORIA EN URL -->
     <script>
         // Inicializar iconos
         lucide.createIcons();
@@ -618,20 +618,17 @@
                     {
                         mediaType: "image",
                         mediaSrc: "Mapa.jfif"
-                    },
+                    }
                     {
-                        mediaType: "gif",
+                        mediaType: "image",
                         mediaSrc: "Casa.gif"
                     }
-                    // Puedes seguir agregando más bloques aquí abajo:
-                    // { mediaType: "text", mediaTitle: "Otro título", mediaBody: "Más texto..." },
-                    // { mediaType: "video", mediaSrc: "Video_Cocktail.mp4" }
                 ]
             }
         };
 
         // Función para cambiar de vistas/páginas
-        function switchView(viewName) {
+        function switchView(viewName, updateHash = true) {
             const views = document.querySelectorAll('.view');
             views.forEach(v => v.classList.remove('active'));
 
@@ -643,12 +640,21 @@
                 targetView.classList.add('active');
             }
 
+            // Marcar botón activo correspondiente
             navBtns.forEach(btn => {
-                if (btn.textContent.toLowerCase().replace(' ', '-') === viewName || 
-                   (viewName === 'inicio' && btn.textContent === 'Inicio')) {
+                const btnNormalized = btn.textContent.toLowerCase()
+                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                    .replace(' ', '-');
+
+                if (btnNormalized === viewName || (viewName === 'detalle-proyecto' && btnNormalized === 'proyectos')) {
                     btn.classList.add('active');
                 }
             });
+
+            // Guardar la vista actual en la URL (ej: #proyectos)
+            if (updateHash && viewName !== 'detalle-proyecto') {
+                history.replaceState(null, null, `#${viewName}`);
+            }
 
             window.scrollTo(0, 0);
         }
@@ -664,7 +670,6 @@
             const dynamicBody = document.getElementById('detail-dynamic-body');
             dynamicBody.innerHTML = "";
 
-            // Si el proyecto tiene bloques intercalados (content)
             if (data.content) {
                 data.content.forEach(bloque => {
                     if (bloque.mediaType === 'image') {
@@ -689,16 +694,13 @@
                     }
                 });
 
-                // Tecnologías utilizadas al final
                 dynamicBody.innerHTML += `
                     <div class="interleaved-text" style="margin-top: 3rem;">
                         <h3>Tecnologías Utilizadas</h3>
                         <p>${data.tech}</p>
                     </div>
                 `;
-            } 
-            // Si el proyecto usa el formato clásico (Proyectos 1 y 2)
-            else {
+            } else {
                 const mediaHTML = data.mediaType === 'video'
                     ? `<video controls autoplay loop src="${data.mediaSrc}"></video>`
                     : `<img src="${data.mediaSrc}" alt="${data.title}">`;
@@ -720,8 +722,24 @@
                 `;
             }
 
-            switchView('detalle-proyecto');
+            // Guardar el proyecto específico en la URL (ej: #proyecto-3)
+            history.replaceState(null, null, `#proyecto-${id}`);
+            switchView('detalle-proyecto', false);
         }
+
+        // Al cargar o refrescar la página, revisa qué había en la URL
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.replace('#', '');
+
+            if (hash.startsWith('proyecto-')) {
+                const projectId = hash.split('-')[1];
+                openProject(projectId);
+            } else if (hash && document.getElementById(`view-${hash}`)) {
+                switchView(hash, false);
+            } else {
+                switchView('inicio', false);
+            }
+        });
     </script>
 </body>
 </html>
